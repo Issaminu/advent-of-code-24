@@ -19,3 +19,8 @@ func IntAbs(x int) int {
 	}
 	return x
 }
+
+type Pair struct {
+	First  int
+	Second int
+}
