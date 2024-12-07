@@ -20,7 +20,7 @@ func IntAbs(x int) int {
 	return x
 }
 
-type Pair struct {
-	First  int
-	Second int
+type Pair[A any, B any] struct {
+	First  A
+	Second B
 }

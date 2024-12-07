@@ -19,14 +19,14 @@ func partOne(input string) {
 	inputMapStr := strings.Split(input, "\n")
 	inputMap := make([][]byte, len(inputMapStr))
 
-	var guardPosition advent24.Pair
+	var guardPosition advent24.Pair[int, int]
 	for i := 0; i < len(inputMapStr); i++ {
 		newVec := make([]byte, len(inputMapStr[i]))
 		for j := 0; j < len(inputMapStr[i]); j++ {
 			newVec[j] = inputMapStr[i][j]
 			// منها حجة و زيارة
 			if inputMapStr[i][j] == '^' {
-				guardPosition = advent24.Pair{First: i, Second: j}
+				guardPosition = advent24.Pair[int, int]{First: i, Second: j}
 			}
 		}
 		inputMap[i] = newVec
@@ -35,7 +35,7 @@ func partOne(input string) {
 	answer := 0
 	currentDirection := 0
 
-	visited := make(map[advent24.Pair]struct{})
+	visited := make(map[advent24.Pair[int, int]]struct{})
 
 	for {
 		if isInBounds(inputMap, guardPosition.First, guardPosition.Second) {
@@ -60,19 +60,19 @@ func partTwo(input string) {
 	inputMapStr := strings.Split(input, "\n")
 	inputMap := make([][]byte, len(inputMapStr))
 
-	var guardPosition advent24.Pair
+	var guardPosition advent24.Pair[int, int]
 	for i := 0; i < len(inputMapStr); i++ {
 		newVec := make([]byte, len(inputMapStr[i]))
 		for j := 0; j < len(inputMapStr[i]); j++ {
 			newVec[j] = inputMapStr[i][j]
 			if inputMapStr[i][j] == '^' {
-				guardPosition = advent24.Pair{First: i, Second: j}
+				guardPosition = advent24.Pair[int, int]{First: i, Second: j}
 			}
 		}
 		inputMap[i] = newVec
 	}
 
-	limit := 10000000
+	limit := 10000
 	answer := 0
 	answerMutex := sync.Mutex{}
 	var wg sync.WaitGroup
@@ -94,11 +94,11 @@ func partTwo(input string) {
 					return
 				}
 
-				var tempGuardPosition advent24.Pair
+				var tempGuardPosition advent24.Pair[int, int]
 				tempGuardPosition.First = guardPosition.First
 				tempGuardPosition.Second = guardPosition.Second
 				currentDirection := 0
-				visited := make(map[advent24.Pair]int)
+				visited := make(map[advent24.Pair[int, int]]int)
 				isLooped := true
 				for k := 0; k < limit; k++ {
 					if isInBounds(inputMap, tempGuardPosition.First, tempGuardPosition.Second) {
